@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ <!DOCTYPE mapper
+   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bawei.dao.PremiumDao" >
+     <select id="list" resultType="Premium">
+        select i.*,t.name as tname from vote_item left join vote_topic t on i.topic_id=t.id
+        <where>
+          <if test="id!=null and id!=''">
+             i.topic_id=${id}
+          </if>
+          <if test="id!=2 and id==null">
+             i.topic_id=1
+          </if>
+        </where>
+     </select>
+     <select id="selectById" resultType="Premium">
+          SELECT id,`name`,votes,topic_id as tid from vote_item where id=${id}
+     </select>
+     <select id="option" resultType="Premium">
+        select id sd tid,name as tname from vote_topic
+     </select>
+     <update id="update">
+        update vote_item set name=#{name},votes=#{votes},topic_id=#{tid} where id=#{id}
+     </update>
+</mapper>
